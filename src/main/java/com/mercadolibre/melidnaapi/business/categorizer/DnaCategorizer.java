@@ -32,10 +32,10 @@ public class DnaCategorizer {
 
         // Check horizontally
         for (int row = 0; row < base; row++) {
-            int col = 1;
+            int col = 0;
 
-            while (col <= base - SEQUENCE_SIZE + seqLetters) {
-                if (dnaMatrix[row][col] == dnaMatrix[row][col-1]) {
+            while (col < base - SEQUENCE_SIZE + seqLetters) {
+                if (dnaMatrix[row][col] == dnaMatrix[row][col+1]) {
                     seqLetters++;
 
                     if (seqLetters == SEQUENCE_SIZE) {
@@ -59,10 +59,10 @@ public class DnaCategorizer {
 
         // Check vertically
         for (int col = 0; col < base; col++) {
-            int row = 1;
+            int row = 0;
 
-            while (row <= base - SEQUENCE_SIZE + seqLetters) {
-                if (dnaMatrix[row][col] == dnaMatrix[row-1][col]) {
+            while (row < base - SEQUENCE_SIZE + seqLetters) {
+                if (dnaMatrix[row][col] == dnaMatrix[row+1][col]) {
                     seqLetters++;
 
                     if (seqLetters == SEQUENCE_SIZE) {
