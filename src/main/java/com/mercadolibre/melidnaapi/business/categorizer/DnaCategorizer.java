@@ -4,6 +4,7 @@ import com.mercadolibre.melidnaapi.model.table.Dna;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -27,162 +28,156 @@ public class DnaCategorizer {
         final int base = dna.size();
 
         int total4LetterSequences = 0;
-        int horizontalSeq = 1;
-        int verticalSeq = 1;
-        int diagonalSeq = 1;
+        int seqLetters = 1;
 
         // Check horizontally
         for (int row = 0; row < base; row++) {
             int col = 1;
 
-            while (col <= base - SEQUENCE_SIZE + horizontalSeq) {
+            while (col <= base - SEQUENCE_SIZE + seqLetters) {
                 if (dnaMatrix[row][col] == dnaMatrix[row][col-1]) {
-                    horizontalSeq++;
+                    seqLetters++;
 
-                    if (horizontalSeq == SEQUENCE_SIZE) {
+                    if (seqLetters == SEQUENCE_SIZE) {
                         total4LetterSequences++;
 
                         if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
                             return true;
                         }
 
-                        horizontalSeq = 1;
+                        seqLetters = 1;
                     }
                 } else {
-                    horizontalSeq = 1;
+                    seqLetters = 1;
                 }
 
                 col++;
             }
 
-            horizontalSeq = 1;
+            seqLetters = 1;
         }
 
         // Check vertically
         for (int col = 0; col < base; col++) {
             int row = 1;
 
-            while (row <= base - SEQUENCE_SIZE + verticalSeq) {
+            while (row <= base - SEQUENCE_SIZE + seqLetters) {
                 if (dnaMatrix[row][col] == dnaMatrix[row-1][col]) {
-                    verticalSeq++;
+                    seqLetters++;
 
-                    if (verticalSeq == SEQUENCE_SIZE) {
+                    if (seqLetters == SEQUENCE_SIZE) {
                         total4LetterSequences++;
 
                         if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
                             return true;
                         }
 
-                        verticalSeq = 1;
+                        seqLetters = 1;
                     }
                 } else {
-                    verticalSeq = 1;
+                    seqLetters = 1;
                 }
 
                 row++;
             }
 
-            verticalSeq = 1;
+            seqLetters = 1;
         }
 
         // top to left diagonals
         for (int baseCol = SEQUENCE_SIZE - 1; baseCol < base; baseCol++) {
 
-            for (int row=1, col=baseCol-1; col >= 0; row++, col--) {
-                if (dnaMatrix[row][col] == dnaMatrix[row-1][col+1]) {
-                    diagonalSeq++;
+            for (int row=0, col=baseCol; col >= SEQUENCE_SIZE - seqLetters; row++, col--) {
+                if (dnaMatrix[row][col] == dnaMatrix[row+1][col-1]) {
+                    seqLetters++;
 
-                    if (diagonalSeq == SEQUENCE_SIZE) {
+                    if (seqLetters == SEQUENCE_SIZE) {
                         total4LetterSequences++;
 
                         if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
                             return true;
                         }
 
-                        diagonalSeq = 1;
+                        seqLetters = 1;
                     }
                 } else {
-                    diagonalSeq = 1;
+                    seqLetters = 1;
                 }
             }
 
-            diagonalSeq = 1;
-
+            seqLetters = 1;
         }
 
         // right to bottom diagonals
         for (int baseRow = base - SEQUENCE_SIZE; baseRow > 0; baseRow--) { // 2
 
-            for (int row = baseRow + 1, col = base - 2; row < base; row++, col--) { // 3, 4
-                if (dnaMatrix[row][col] == dnaMatrix[row - 1][col + 1]) {
-                    diagonalSeq++;
+            for (int row=baseRow, col=base-1; row < base - SEQUENCE_SIZE + seqLetters; row++, col--) { // 3, 4
+                if (dnaMatrix[row][col] == dnaMatrix[row + 1][col - 1]) {
+                    seqLetters++;
 
-                    if (diagonalSeq == SEQUENCE_SIZE) {
+                    if (seqLetters == SEQUENCE_SIZE) {
                         total4LetterSequences++;
 
                         if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
                             return true;
                         }
 
-                        diagonalSeq = 1;
+                        seqLetters = 1;
                     }
                 } else {
-                    diagonalSeq = 1;
+                    seqLetters = 1;
                 }
             }
 
-            diagonalSeq = 1;
-
+            seqLetters = 1;
         }
 
         // top to right diagonals
         for (int baseCol = base - SEQUENCE_SIZE; baseCol > 0; baseCol--) {
 
-            for (int row=1, col=baseCol+1; col < base; row++, col++) {
-                if (dnaMatrix[row][col] == dnaMatrix[row-1][col-1]) {
-                    diagonalSeq++;
+            for (int row=0, col=baseCol; col < base - SEQUENCE_SIZE + seqLetters; row++, col++) {
+                if (dnaMatrix[row][col] == dnaMatrix[row+1][col+1]) {
+                    seqLetters++;
 
-                    if (diagonalSeq == SEQUENCE_SIZE) {
+                    if (seqLetters == SEQUENCE_SIZE) {
                         total4LetterSequences++;
 
                         if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
                             return true;
                         }
 
-                        diagonalSeq = 1;
+                        seqLetters = 1;
                     }
                 } else {
-                    diagonalSeq = 1;
+                    seqLetters = 1;
                 }
             }
 
-            diagonalSeq = 1;
-
+            seqLetters = 1;
         }
 
         // left to bottom diagonals
         for (int baseRow = base - SEQUENCE_SIZE; baseRow > 0; baseRow--) {
 
-            for (int row = baseRow + 1, col = 1; row < base; row++, col++) {
-                if (dnaMatrix[row][col] == dnaMatrix[row - 1][col - 1]) {
-                    diagonalSeq++;
+            for (int row = baseRow, col = 0; row < base - SEQUENCE_SIZE + seqLetters; row++, col++) {
+                if (dnaMatrix[row][col] == dnaMatrix[row + 1][col + 1]) {
+                    seqLetters++;
 
-                    if (diagonalSeq == SEQUENCE_SIZE) {
+                    if (seqLetters == SEQUENCE_SIZE) {
                         total4LetterSequences++;
 
                         if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
                             return true;
                         }
 
-                        diagonalSeq = 1;
+                        seqLetters = 1;
                     }
                 } else {
-                    diagonalSeq = 1;
+                    seqLetters = 1;
                 }
             }
 
-            diagonalSeq = 1;
-
+            seqLetters = 1;
         }
 
         return false;
@@ -203,5 +198,22 @@ public class DnaCategorizer {
 
         return dnaMatrix;
     }
+//
+//    public static void main(String[] args) {
+//        List<String> dna = Arrays.asList(
+//                "CTGAAA",
+//                "CTAGGC",
+//                "TAGTGT",
+//                "AGAGTA",
+//                "CCCGTA",
+//                "TCACTG"
+//        );
+//
+//        long start = System.currentTimeMillis();
+//
+//        System.out.println(new DnaCategorizer().isSimian(dna));
+//
+//        System.out.println(System.currentTimeMillis() - start);
+//    }
 
 }
