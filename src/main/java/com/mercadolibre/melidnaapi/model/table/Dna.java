@@ -4,7 +4,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mercadolibre.melidnaapi.model.exception.BusinessException;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -29,24 +28,14 @@ public class Dna {
     private List<String> dna = new ArrayList<>();
 
     public void generateId() {
-        checkNullDna();
-
         setDnaId(UUID.nameUUIDFromBytes(String.join(",", this.dna).getBytes()).toString());
     }
 
     public void prepareMatrixLetters() {
-        checkNullDna();
-
         setDna(dna.stream()
                 .map(String::toUpperCase)
                 .collect(toList())
         );
-    }
-
-    private void checkNullDna() {
-        if (dna == null) {
-            throw new BusinessException("DNA code has not been set");
-        }
     }
 
     public void categorizeAsSimian() {
