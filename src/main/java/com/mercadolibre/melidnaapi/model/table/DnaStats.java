@@ -19,7 +19,17 @@ public class DnaStats {
     private Long countMutantDna;
     private Long countHumanDna;
 
+    /**
+     * Ratio will be null if there are 0 humans since divison by zero cannot happen.
+     * Otherwise, ratio of simians x humans will be calculated.
+     *
+     * @return simians x humans ratio
+     */
     public BigDecimal getRatio() {
+        if (countHumanDna == 0) {
+            return null;
+        }
+
         return BigDecimal.valueOf(countMutantDna)
                 .divide(BigDecimal.valueOf(countHumanDna), 4, RoundingMode.HALF_UP);
     }

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DnaStatsService {
 
+    private static final String LATEST_ID = "latest";
+
     private final DnaStatsRepository repository;
 
     public DnaStats findLatest() {
-        return repository.findById("latest")
+        return repository.findById(LATEST_ID)
                 .orElseThrow(NotFoundException::new);
     }
 
