@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.math.RoundingMode;
 
 @Data
 @DynamoDBTable(tableName = "DnaStats")
@@ -18,6 +18,10 @@ public class DnaStats {
 
     private Long countMutantDna;
     private Long countHumanDna;
-    private BigDecimal ratio;
+
+    public BigDecimal getRatio() {
+        return BigDecimal.valueOf(countMutantDna)
+                .divide(BigDecimal.valueOf(countHumanDna), 4, RoundingMode.HALF_UP);
+    }
 
 }

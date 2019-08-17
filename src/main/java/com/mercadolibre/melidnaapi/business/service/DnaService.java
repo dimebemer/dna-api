@@ -12,8 +12,6 @@ public class DnaService {
     private final DnaRepository repository;
 
     public Dna create(Dna dna) {
-        dna.generateId();
-
         return repository.save(dna);
     }
 

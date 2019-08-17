@@ -1,4 +1,4 @@
 package com.mercadolibre.melidnaapi.business.validator;
 
-public class SimianValidator {
+public interface SimianValidator extends DnaValidator {
 }

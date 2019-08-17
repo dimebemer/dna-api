@@ -12,3 +12,13 @@ cloud:
       static: sa-east-1
 server:
   port: 5000
+
+# DNA properties
+dna:
+  minimum-simian-sequences: 2
+  sequence-size: 4
+  nitrogenous-bases:
+    - A
+    - T
+    - C
+    - G

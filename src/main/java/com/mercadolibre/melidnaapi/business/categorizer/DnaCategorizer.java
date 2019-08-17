@@ -1,25 +1,24 @@
 package com.mercadolibre.melidnaapi.business.categorizer;
 
+import com.mercadolibre.melidnaapi.config.props.DnaProperties;
 import com.mercadolibre.melidnaapi.model.table.Dna;
+import com.mercadolibre.melidnaapi.model.table.Dna.DnaCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static com.mercadolibre.melidnaapi.model.table.Dna.DnaCategory.HUMAN;
+import static com.mercadolibre.melidnaapi.model.table.Dna.DnaCategory.SIMIAN;
 
 @Component
 @RequiredArgsConstructor
 public class DnaCategorizer {
 
-    private static final int SEQUENCE_SIZE = 4;
-    private static final int MINIMUM_SIMIAN_SEQUENCES = 2;
+    private final DnaProperties props;
 
-    public void categorize(Dna dna) {
-        if (isSimian(dna.getDna())) {
-            dna.categorizeAsSimian();
-        } else {
-            dna.categorizeAsHuman();
-        }
+    public DnaCategory categorize(Dna dna) {
+        return isSimian(dna.getDna()) ? SIMIAN : HUMAN;
     }
 
     private boolean isSimian(List<String> dna) {
@@ -34,14 +33,14 @@ public class DnaCategorizer {
         for (int row = 0; row < base; row++) {
             int col = 0;
 
-            while (col < base - SEQUENCE_SIZE + seqLetters) {
+            while (col < base - props.getSequenceSize() + seqLetters) {
                 if (dnaMatrix[row][col] == dnaMatrix[row][col+1]) {
                     seqLetters++;
 
-                    if (seqLetters == SEQUENCE_SIZE) {
+                    if (seqLetters == props.getSequenceSize()) {
                         total4LetterSequences++;
 
-                        if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
+                        if (total4LetterSequences >= props.getMinimumSimianSequences()) {
                             return true;
                         }
 
@@ -61,14 +60,14 @@ public class DnaCategorizer {
         for (int col = 0; col < base; col++) {
             int row = 0;
 
-            while (row < base - SEQUENCE_SIZE + seqLetters) {
+            while (row < base - props.getSequenceSize() + seqLetters) {
                 if (dnaMatrix[row][col] == dnaMatrix[row+1][col]) {
                     seqLetters++;
 
-                    if (seqLetters == SEQUENCE_SIZE) {
+                    if (seqLetters == props.getSequenceSize()) {
                         total4LetterSequences++;
 
-                        if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
+                        if (total4LetterSequences >= props.getMinimumSimianSequences()) {
                             return true;
                         }
 
@@ -84,17 +83,17 @@ public class DnaCategorizer {
             seqLetters = 1;
         }
 
-        // top to left diagonals
-        for (int baseCol = SEQUENCE_SIZE - 1; baseCol < base; baseCol++) {
+        // Top to left diagonals
+        for (int baseCol = props.getSequenceSize() - 1; baseCol < base; baseCol++) {
 
-            for (int row=0, col=baseCol; col >= SEQUENCE_SIZE - seqLetters; row++, col--) {
+            for (int row=0, col=baseCol; col >= props.getSequenceSize() - seqLetters; row++, col--) {
                 if (dnaMatrix[row][col] == dnaMatrix[row+1][col-1]) {
                     seqLetters++;
 
-                    if (seqLetters == SEQUENCE_SIZE) {
+                    if (seqLetters == props.getSequenceSize()) {
                         total4LetterSequences++;
 
-                        if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
+                        if (total4LetterSequences >= props.getMinimumSimianSequences()) {
                             return true;
                         }
 
@@ -108,17 +107,17 @@ public class DnaCategorizer {
             seqLetters = 1;
         }
 
-        // right to bottom diagonals
-        for (int baseRow = base - SEQUENCE_SIZE; baseRow > 0; baseRow--) { // 2
+        // Right to bottom diagonals
+        for (int baseRow = base - props.getSequenceSize(); baseRow > 0; baseRow--) {
 
-            for (int row=baseRow, col=base-1; row < base - SEQUENCE_SIZE + seqLetters; row++, col--) { // 3, 4
+            for (int row=baseRow, col=base-1; row < base - props.getSequenceSize() + seqLetters; row++, col--) {
                 if (dnaMatrix[row][col] == dnaMatrix[row + 1][col - 1]) {
                     seqLetters++;
 
-                    if (seqLetters == SEQUENCE_SIZE) {
+                    if (seqLetters == props.getSequenceSize()) {
                         total4LetterSequences++;
 
-                        if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
+                        if (total4LetterSequences >= props.getMinimumSimianSequences()) {
                             return true;
                         }
 
@@ -132,17 +131,17 @@ public class DnaCategorizer {
             seqLetters = 1;
         }
 
-        // top to right diagonals
-        for (int baseCol = base - SEQUENCE_SIZE; baseCol > 0; baseCol--) {
+        // Top to right diagonals
+        for (int baseCol = base - props.getSequenceSize(); baseCol > 0; baseCol--) {
 
-            for (int row=0, col=baseCol; col < base - SEQUENCE_SIZE + seqLetters; row++, col++) {
+            for (int row=0, col=baseCol; col < base - props.getSequenceSize() + seqLetters; row++, col++) {
                 if (dnaMatrix[row][col] == dnaMatrix[row+1][col+1]) {
                     seqLetters++;
 
-                    if (seqLetters == SEQUENCE_SIZE) {
+                    if (seqLetters == props.getSequenceSize()) {
                         total4LetterSequences++;
 
-                        if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
+                        if (total4LetterSequences >= props.getMinimumSimianSequences()) {
                             return true;
                         }
 
@@ -156,17 +155,17 @@ public class DnaCategorizer {
             seqLetters = 1;
         }
 
-        // left to bottom diagonals
-        for (int baseRow = base - SEQUENCE_SIZE; baseRow > 0; baseRow--) {
+        // Left to bottom diagonals
+        for (int baseRow = base - props.getSequenceSize(); baseRow > 0; baseRow--) {
 
-            for (int row = baseRow, col = 0; row < base - SEQUENCE_SIZE + seqLetters; row++, col++) {
+            for (int row = baseRow, col = 0; row < base - props.getSequenceSize() + seqLetters; row++, col++) {
                 if (dnaMatrix[row][col] == dnaMatrix[row + 1][col + 1]) {
                     seqLetters++;
 
-                    if (seqLetters == SEQUENCE_SIZE) {
+                    if (seqLetters == props.getSequenceSize()) {
                         total4LetterSequences++;
 
-                        if (total4LetterSequences >= MINIMUM_SIMIAN_SEQUENCES) {
+                        if (total4LetterSequences >= props.getMinimumSimianSequences()) {
                             return true;
                         }
 
