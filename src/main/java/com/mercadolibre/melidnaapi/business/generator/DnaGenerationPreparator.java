@@ -19,8 +19,8 @@ public class DnaGenerationPreparator {
     }
 
     private void prepareFields(Dna dna) {
-        dna.generateId();
         dna.prepareMatrixLetters();
+        dna.generateId();
     }
 
     private void validate(Dna dna) {
