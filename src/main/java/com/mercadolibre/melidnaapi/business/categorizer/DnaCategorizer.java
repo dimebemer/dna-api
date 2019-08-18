@@ -34,11 +34,11 @@ public class DnaCategorizer {
         for (int row = 0; row < base; row++) {
             int col = 0;
 
-            while (col < base - props.getSequenceSize() + sequentialLetters) {
+            while (col < base - props.getSimianSequenceSize() + sequentialLetters) {
                 if (dnaMatrix[row][col] == dnaMatrix[row][col+1]) {
                     sequentialLetters++;
 
-                    if (sequentialLetters == props.getSequenceSize()) {
+                    if (sequentialLetters == props.getSimianSequenceSize()) {
                         totalCompleteSequences++;
 
                         if (totalCompleteSequences >= props.getMinimumSimianSequences()) {
@@ -61,11 +61,11 @@ public class DnaCategorizer {
         for (int col = 0; col < base; col++) {
             int row = 0;
 
-            while (row < base - props.getSequenceSize() + sequentialLetters) {
+            while (row < base - props.getSimianSequenceSize() + sequentialLetters) {
                 if (dnaMatrix[row][col] == dnaMatrix[row+1][col]) {
                     sequentialLetters++;
 
-                    if (sequentialLetters == props.getSequenceSize()) {
+                    if (sequentialLetters == props.getSimianSequenceSize()) {
                         totalCompleteSequences++;
 
                         if (totalCompleteSequences >= props.getMinimumSimianSequences()) {
@@ -85,13 +85,13 @@ public class DnaCategorizer {
         }
 
         // Top to left diagonals
-        for (int baseCol = props.getSequenceSize() - 1; baseCol < base; baseCol++) {
+        for (int baseCol = props.getSimianSequenceSize() - 1; baseCol < base; baseCol++) {
 
-            for (int row=0, col=baseCol; col >= props.getSequenceSize() - sequentialLetters; row++, col--) {
+            for (int row = 0, col = baseCol; col >= props.getSimianSequenceSize() - sequentialLetters; row++, col--) {
                 if (dnaMatrix[row][col] == dnaMatrix[row+1][col-1]) {
                     sequentialLetters++;
 
-                    if (sequentialLetters == props.getSequenceSize()) {
+                    if (sequentialLetters == props.getSimianSequenceSize()) {
                         totalCompleteSequences++;
 
                         if (totalCompleteSequences >= props.getMinimumSimianSequences()) {
@@ -109,13 +109,13 @@ public class DnaCategorizer {
         }
 
         // Right to bottom diagonals
-        for (int baseRow = base - props.getSequenceSize(); baseRow > 0; baseRow--) {
+        for (int baseRow = base - props.getSimianSequenceSize(); baseRow > 0; baseRow--) {
 
-            for (int row=baseRow, col=base-1; row < base - props.getSequenceSize() + sequentialLetters; row++, col--) {
+            for (int row = baseRow, col = base-1; row < base - props.getSimianSequenceSize() + sequentialLetters; row++, col--) {
                 if (dnaMatrix[row][col] == dnaMatrix[row + 1][col - 1]) {
                     sequentialLetters++;
 
-                    if (sequentialLetters == props.getSequenceSize()) {
+                    if (sequentialLetters == props.getSimianSequenceSize()) {
                         totalCompleteSequences++;
 
                         if (totalCompleteSequences >= props.getMinimumSimianSequences()) {
@@ -133,13 +133,13 @@ public class DnaCategorizer {
         }
 
         // Top to right diagonals
-        for (int baseCol = base - props.getSequenceSize(); baseCol > 0; baseCol--) {
+        for (int baseCol = base - props.getSimianSequenceSize(); baseCol >= 0; baseCol--) {
 
-            for (int row=0, col=baseCol; col < base - props.getSequenceSize() + sequentialLetters; row++, col++) {
+            for (int row = 0, col = baseCol; col < base - props.getSimianSequenceSize() + sequentialLetters; row++, col++) {
                 if (dnaMatrix[row][col] == dnaMatrix[row+1][col+1]) {
                     sequentialLetters++;
 
-                    if (sequentialLetters == props.getSequenceSize()) {
+                    if (sequentialLetters == props.getSimianSequenceSize()) {
                         totalCompleteSequences++;
 
                         if (totalCompleteSequences >= props.getMinimumSimianSequences()) {
@@ -157,13 +157,13 @@ public class DnaCategorizer {
         }
 
         // Left to bottom diagonals
-        for (int baseRow = base - props.getSequenceSize(); baseRow > 0; baseRow--) {
+        for (int baseRow = base - props.getSimianSequenceSize(); baseRow > 0; baseRow--) {
 
-            for (int row = baseRow, col = 0; row < base - props.getSequenceSize() + sequentialLetters; row++, col++) {
+            for (int row = baseRow, col = 0; row < base - props.getSimianSequenceSize() + sequentialLetters; row++, col++) {
                 if (dnaMatrix[row][col] == dnaMatrix[row + 1][col + 1]) {
                     sequentialLetters++;
 
-                    if (sequentialLetters == props.getSequenceSize()) {
+                    if (sequentialLetters == props.getSimianSequenceSize()) {
                         totalCompleteSequences++;
 
                         if (totalCompleteSequences >= props.getMinimumSimianSequences()) {

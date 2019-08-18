@@ -11,7 +11,7 @@ public class DnaProperties {
 
     private char[] nitrogenousBases;
     private Integer minimumSimianSequences;
-    private Integer sequenceSize;
+    private Integer simianSequenceSize;
 
     public int getMinimumMatrixSize() {
         return nitrogenousBases.length;

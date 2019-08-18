@@ -16,7 +16,7 @@ server:
 # DNA properties
 dna:
   minimum-simian-sequences: 2
-  sequence-size: 4
+  simian-sequence-size: 4
   nitrogenous-bases:
     - A
     - T
