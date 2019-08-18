@@ -20,4 +20,5 @@ public class IsHumanValidator implements HumanDnaValidator {
             throw new NotAllowedException("DNA is not of a Human");
         }
     }
+
 }
