@@ -197,7 +197,4 @@ public class DnaCategorizerTest {
         assertThat(category, is(SIMIAN));
     }
 
-
-
-
 }
