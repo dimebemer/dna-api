@@ -26,6 +26,17 @@ Services for DNA operations.
 
 * Ratio will be **null** when there are 0 humans registered (no division by zero allowed).
 
+### Simian Algorithm
+* The Simian Algorithm is inside the `DnaCategorizer` class, as a private method.
+ 
+* The method takes a `List<String>` rather than a `String[]` as a parameter for consistency -
+  specially since converting this List to an Array and then to a Char Matrix (as the algorithm does) 
+  could slightly impact performance.
+
+* The algorithm will search for at least **2** sequences of **4** equal letters for it to be considered a Simian.
+  Since it wasn't stated that those sequences should be distinct, 
+  _repeated sequences will also be considered_ (e.g. 2 sequences of `AAAA`).  
+
 ### Tests
 * SpringBoot's default integration test is annotated with `@Ignore` due to AWS access keys not being hardcoded in properties.
   These are input as environment variables. Still, test coverage will be above 80% lines of code as required.

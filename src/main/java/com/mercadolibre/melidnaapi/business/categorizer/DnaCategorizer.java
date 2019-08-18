@@ -23,6 +23,14 @@ public class DnaCategorizer {
         return isSimian(dna.getDna()) ? SIMIAN : HUMAN;
     }
 
+    /**
+     * Evaluates given DNA to check if it's a Simian or not.
+     * A Simian must have at least props.minimumSimianSequences sequences of props.simianSequenceSize letters
+     * for it to be considered a simian. These sequences may be either horizontal, vertical or diagonal.
+     *
+     * @param dna DNA Matrix
+     * @return is DNA of a Simian or not
+     */
     private boolean isSimian(List<String> dna) {
         final char[][] dnaMatrix = fetchDnaMatrix(dna);
         final int base = dna.size();
