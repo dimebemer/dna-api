@@ -1,4 +1,4 @@
-# MercadoLibre DNA API
+# DNA API
 Services for DNA operations.
 
 ## Requirements
