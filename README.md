@@ -43,9 +43,6 @@ Services for DNA operations.
 
 ## Endpoints
 
-### Host
-http://melidnaapi-env.nteuwmd3nb.sa-east-1.elasticbeanstalk.com/ - INACTIVE
-
 ### GET /dnas/{id}
 Returns any DNA by ID.
 
